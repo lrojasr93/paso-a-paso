@@ -13,6 +13,7 @@ Aplicación web gratuita para que personas mayores en Chile aprendan a usar el c
 | 2. Llamadas | Contestar, marcar un número, guardar un contacto |
 | 3. WhatsApp | Abrir un chat, escribir, mandar y escuchar audios, ver fotos |
 | 4. Estafas | 4 reglas de oro y 7 casos comunes en Chile |
+| 5. Mi banco en el celular | Entrar con clave, ver saldo y movimientos, transferir, seguridad (banco ficticio) |
 
 **Plan Familia (sin servidor):** el adulto mayor envía su avance por WhatsApp como un enlace (`familia.html#avance=…`) y su familia puede mandarle lecciones específicas (`index.html#/pedido/<lección>/<nombre>`). No se guardan datos en ningún servidor; el avance vive en el teléfono.
 

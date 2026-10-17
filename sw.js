@@ -1,10 +1,10 @@
 /* Paso a Paso — funciona sin internet una vez abierta */
-const CACHE = 'pasoapaso-v2';
+const CACHE = 'pasoapaso-v3';
 const ARCHIVOS = [
   './', 'index.html', 'familia.html', 'css/styles.css', 'manifest.webmanifest',
   'js/core.js', 'js/sim.js',
   'js/lecciones/nivel1-toques.js', 'js/lecciones/nivel2-llamadas.js',
-  'js/lecciones/nivel3-whatsapp.js', 'js/lecciones/nivel4-estafas.js', 'js/lecciones/proximamente.js',
+  'js/lecciones/nivel3-whatsapp.js', 'js/lecciones/nivel4-estafas.js', 'js/lecciones/nivel5-banco.js', 'js/lecciones/proximamente.js',
   'icons/icono.svg', 'icons/icono-180.png', 'icons/icono-192.png', 'icons/icono-512.png',
 ];
 

@@ -161,13 +161,21 @@
   const formatoNumero = (d) => [d.slice(0, 1), d.slice(1, 5), d.slice(5, 9)].filter(Boolean).join(' ');
   sim.formatoNumero = formatoNumero;
 
-  sim.marcarGuiado = function (ctx, numero, alTerminar) {
+  const TECLAS_TELEFONO = [['1', ''], ['2', 'ABC'], ['3', 'DEF'], ['4', 'GHI'], ['5', 'JKL'], ['6', 'MNO'], ['7', 'PQRS'], ['8', 'TUV'], ['9', 'WXYZ'], ['*', ''], ['0', '+'], ['#', '']];
+  const TECLAS_NUMEROS = [['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9'], [''], ['0'], ['']];
+
+  sim.marcarGuiado = (ctx, numero, alTerminar) =>
+    sim.digitosGuiado(ctx, numero, { vacio: 'Marque el número', formato: formatoNumero, teclas: TECLAS_TELEFONO }, alTerminar);
+
+  // Teclado numérico guiado: marca un número, un monto o una clave, dígito por dígito
+  sim.digitosGuiado = function (ctx, numero, o, alTerminar) {
+    const formato = o.formato || ((d) => d);
     let i = 0;
-    const pantalla = h('div', { class: 'marcador-numero vacio' }, 'Marque el número');
+    const pantalla = h('div', { class: 'marcador-numero vacio' }, o.vacio || '');
     const teclas = h('div', { class: 'marcador' },
-      [['1', ''], ['2', 'ABC'], ['3', 'DEF'], ['4', 'GHI'], ['5', 'JKL'], ['6', 'MNO'], ['7', 'PQRS'], ['8', 'TUV'], ['9', 'WXYZ'], ['*', ''], ['0', '+'], ['#', '']]
-        .map(([n, letras]) => h('button', { class: 'marca-tecla', 'data-k': n, onclick: (e) => tocar(n, e.currentTarget) },
-          h('span', {}, n), h('small', {}, letras))));
+      (o.teclas || TECLAS_NUMEROS).map(([n, letras]) => n
+        ? h('button', { class: 'marca-tecla', 'data-k': n, onclick: (e) => tocar(n, e.currentTarget) }, h('span', {}, n), letras != null ? h('small', {}, letras) : null)
+        : h('span', { 'aria-hidden': 'true' })));
     const indicar = () => {
       teclas.querySelectorAll('.brilla').forEach((k) => k.classList.remove('brilla'));
       const k = teclas.querySelector(`[data-k="${numero[i]}"]`);
@@ -178,7 +186,7 @@
       if (i >= numero.length) return;
       if (n === numero[i]) {
         i++; boton.classList.add('pulsada'); setTimeout(() => boton.classList.remove('pulsada'), 200);
-        pantalla.textContent = formatoNumero(numero.slice(0, i)); pantalla.classList.remove('vacio');
+        pantalla.textContent = formato(numero.slice(0, i)); pantalla.classList.remove('vacio');
         if (i === numero.length) { teclas.querySelectorAll('.brilla').forEach((k) => k.classList.remove('brilla')); ctx.pista(''); alTerminar(); }
         else indicar();
       } else {
@@ -186,7 +194,7 @@
       }
     }
     indicar();
-    return h('div', { class: 'marcador-app' }, pantalla, teclas);
+    return h('div', { class: 'marcador-app' + (o.clase ? ' ' + o.clase : '') }, o.arriba || null, pantalla, teclas);
   };
 
   // ---------- Pantalla de llamada ----------
@@ -212,7 +220,7 @@
     { id: 'fotos', nombre: 'Fotos', icono: '🖼️', color: '#F9A825' },
     { id: 'mensajes', nombre: 'Mensajes', icono: '✉️', color: '#1565C0' },
     { id: 'internet', nombre: 'Internet', icono: '🌐', color: '#0277BD' },
-    { id: 'reloj', nombre: 'Reloj', icono: '⏰', color: '#6A1B9A' },
+    { id: 'banco', nombre: 'Mi Banco', icono: '🏦', color: '#123B6D' },
     { id: 'ajustes', nombre: 'Ajustes', icono: '⚙️', color: '#616161' },
   ];
   sim.escritorio = function (alTocarApp) {

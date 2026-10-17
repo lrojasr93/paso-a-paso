@@ -33,8 +33,8 @@
       clase: 'etapa-arriba',
       demoraMano: 20000,
       render(ctx) {
-        const icono = tipo === 'llamada' ? '📞' : tipo === 'whatsapp' ? '💬' : '✉️';
-        const etiqueta = tipo === 'llamada' ? 'Llamada' : tipo === 'whatsapp' ? 'WhatsApp' : 'Mensaje de texto (SMS)';
+        const TIPOS = { llamada: ['📞', 'Llamada'], whatsapp: ['💬', 'WhatsApp'], app: ['🏦', 'Aviso dentro de la app del banco'], sms: ['✉️', 'Mensaje de texto (SMS)'] };
+        const [icono, etiqueta] = TIPOS[tipo] || TIPOS.sms;
         const tarjeta = h('div', { class: 'caso caso-' + tipo },
           h('div', { class: 'caso-cabeza' }, h('span', { 'aria-hidden': 'true' }, icono), ' ', etiqueta, ' · ', h('strong', {}, remitente)),
           h('p', { class: 'caso-texto', html: texto.replace(/(https?:\/\/\S+)/g, '<span class="enlace-falso">$1</span>') }));
@@ -70,6 +70,8 @@
       },
     };
   }
+
+  PP.p.caso = caso; // también lo usa el nivel del banco
 
   const practicar = {
     id: 'estafas-casos', icono: '🕵️', titulo: '¿Es estafa? Practiquemos',

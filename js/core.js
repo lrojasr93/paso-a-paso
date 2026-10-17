@@ -89,7 +89,16 @@
     'llamadas-contestar': 'b1', 'llamadas-marcar': 'b2', 'llamadas-contacto': 'b3',
     'wsp-abrir': 'c1', 'wsp-escribir': 'c2', 'wsp-audio': 'c3', 'wsp-foto': 'c4',
     'estafas-reglas': 'd1', 'estafas-casos': 'd2',
+    'banco-entrar': 'e1', 'banco-saldo': 'e2', 'banco-transferir': 'e3', 'banco-seguro': 'e4',
   });
+
+  // Patrocinador opcional, para demos: index.html?patrocinador=Nombre
+  PP.patrocinador = (() => {
+    try { return (new URLSearchParams(location.search).get('patrocinador') || '').trim().slice(0, 40) || null; } catch (e) { return null; }
+  })();
+  const notaPatrocinio = () => PP.patrocinador
+    ? h('p', { class: 'patrocinio' }, '💛 Gratis gracias a ', h('strong', {}, PP.patrocinador))
+    : null;
   PP.base = () => location.href.split('#')[0].split('?')[0].replace(/[^/]*$/, '');
   PP.enlaceAvance = function () {
     const cods = Object.keys(estado.hechas).filter((id) => estado.hechas[id] && CODIGOS[id]).map((id) => CODIGOS[id]).sort().join('');
@@ -224,6 +233,7 @@
       h('header', { class: 'cabecera' },
         h('div', { class: 'marca' }, h('img', { src: 'icons/icono.svg', alt: '', width: 40, height: 40 }), 'Paso a Paso'),
         botonVoz()),
+      notaPatrocinio(),
       destacado,
       totalHechas ? h('div', { class: 'tarjeta-familia' },
         h('p', {}, h('strong', {}, '👨‍👩‍👧 Su familia'), ' puede ver todo lo que ha aprendido.'),
@@ -244,6 +254,7 @@
         h('span', { class: 'nivel-icono grande', 'aria-hidden': 'true' }, nv.icono),
         h('div', {}, h('span', { class: 'nivel-num' }, 'Nivel ' + nv.n), h('h1', {}, nv.titulo))),
       h('p', { class: 'grande' }, nv.descripcion),
+      notaPatrocinio(),
       h('ol', { class: 'lecciones' }, nv.lecciones.map((l) =>
         h('li', {}, h('button', { class: 'leccion' + (estado.hechas[l.id] ? ' hecha' : ''), onclick: () => ir('leccion/' + l.id) },
           h('span', { class: 'leccion-icono', 'aria-hidden': 'true' }, l.icono),
