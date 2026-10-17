@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Paso a Paso Familia</title>
+  <meta name="description" content="Ayuda a tu mamá, papá o abuelos a aprender a usar el celular, sin tener que explicarles todo tú. Gratis.">
+  <meta name="theme-color" content="#0B6E69">
+  <link rel="icon" href="icons/icono.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icono-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { font-size: 1.15rem; }
+    .familia { max-width: 760px; margin: 0 auto; padding: 20px 16px 60px; }
+    .familia h1 { font-size: 2.1rem; }
+    .familia h2 { font-size: 1.5rem; margin-top: 2em; }
+    .hero { background: var(--primario-claro); border-radius: 24px; padding: 26px 20px; margin-top: 18px; }
+    .hero p { font-size: 1.25rem; }
+    .hero .botones-col { max-width: 420px; }
+    .pasos-f { counter-reset: p; list-style: none; padding: 0; display: grid; gap: 14px; }
+    .pasos-f li { counter-increment: p; background: var(--superficie); border: 2px solid var(--borde); border-radius: 18px; padding: 16px 16px 16px 66px; position: relative; }
+    .pasos-f li::before { content: counter(p); position: absolute; left: 16px; top: 16px; width: 36px; height: 36px; border-radius: 50%; background: var(--primario); color: #fff; display: grid; place-items: center; font-weight: 700; }
+    details { background: var(--superficie-2); border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+    summary { font-weight: 700; cursor: pointer; min-height: 32px; }
+    .grid-niveles { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .grid-niveles div { background: var(--superficie); border: 2px solid var(--borde); border-radius: 16px; padding: 14px; }
+    .grid-niveles .pronto { opacity: .65; }
+    .grid-niveles strong { display: block; }
+    .consejos { display: grid; gap: 10px; padding: 0; list-style: none; }
+    .consejos li { background: var(--amarillo-suave); border-radius: 14px; padding: 12px 14px; }
+    .plan { border: 2px dashed var(--primario); border-radius: 20px; padding: 18px; background: var(--superficie); }
+    .etiqueta { display: inline-block; background: var(--amarillo); color: #1D2433; font-size: .9rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; }
+    .pie { margin-top: 40px; color: var(--suave); font-size: 1rem; text-align: center; }
+    .avance { margin-top: 18px; border: 2px solid var(--bien-borde); background: var(--superficie); border-radius: 24px; padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; }
+    .avance h1 { font-size: 1.7rem; margin: 0; text-wrap: balance; }
+    .avance-resumen { font-size: 1.25rem; margin: 0; }
+    .avance-fecha { color: var(--suave); font-size: 1rem; margin: 0; }
+    .avance-nivel { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; border-top: 1px solid var(--borde); }
+    .avance-nivel-cabeza { display: flex; justify-content: space-between; gap: 10px; font-weight: 700; }
+    .avance-lista { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 6px; }
+    .avance-lista li { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 1.05rem; }
+    .avance-lista .pendiente { color: var(--suave); }
+    .btn-pedir { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 12px; border-radius: 12px; border: 2px solid var(--borde); background: var(--superficie-2); color: var(--texto); font-weight: 700; font-size: .95rem; text-decoration: none; }
+    .avance-animo { background: var(--amarillo-suave); border-radius: 14px; padding: 12px 14px; margin: 0; }
+    .campo-nombre { display: flex; flex-direction: column; gap: 6px; max-width: 420px; margin-bottom: 14px; }
+    .campo-nombre label { font-weight: 700; font-size: 1rem; }
+    .campo-nombre input { font: inherit; min-height: 52px; padding: 8px 14px; border-radius: 12px; border: 2px solid var(--borde); background: var(--superficie); color: var(--texto); }
+    .pedidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+    .pedidos .grupo { display: flex; flex-direction: column; gap: 8px; }
+    .pedidos .grupo strong { font-size: 1rem; color: var(--suave); text-transform: uppercase; letter-spacing: .04em; }
+    .pedidos .btn-pedir { justify-content: space-between; width: 100%; min-height: 52px; font-size: 1.05rem; background: var(--superficie); }
+  </style>
+</head>
+<body>
+  <main class="familia">
+    <header class="cabecera">
+      <a class="marca" href="index.html" style="text-decoration:none"><img src="icons/icono.svg" alt="" width="40" height="40">Paso a Paso</a>
+      <a class="btn btn-suave" href="index.html" style="min-height:48px;padding:8px 14px">Abrir la app</a>
+    </header>
+
+    <section id="avance" class="avance" hidden></section>
+
+    <section class="hero">
+      <h1>¿Tu mamá o tu papá te llama para preguntarte cómo mandar un audio?</h1>
+      <p>Paso a Paso les enseña a usar el celular <strong>con calma, con voz y practicando sin riesgo</strong>: llamadas, WhatsApp, fotos y cómo no caer en estafas. Es <strong>gratis</strong> y funciona en Android y iPhone.</p>
+      <div class="botones-col">
+        <a id="compartir" class="btn btn-whatsapp btn-grande" target="_blank" rel="noopener">💬 Enviárselo por WhatsApp</a>
+        <a class="btn btn-suave" href="index.html">Probarla yo primero</a>
+      </div>
+    </section>
+
+    <h2>Cómo dejarla lista en 5 minutos</h2>
+    <ol class="pasos-f">
+      <li><strong>Ábrela en su celular.</strong> Mándale el enlace por WhatsApp o ábrela tú mismo en su teléfono.</li>
+      <li><strong>Agrégala a su pantalla de inicio</strong>, para que la encuentre como cualquier otra aplicación.
+        <details><summary>En Android (Chrome)</summary>Toca los tres puntitos ⋮ arriba a la derecha → “Agregar a la pantalla principal” o “Instalar aplicación”.</details>
+        <details><summary>En iPhone (Safari)</summary>Toca el botón Compartir (cuadrado con flecha hacia arriba) → “Agregar a inicio”.</details>
+      </li>
+      <li><strong>Acompáñale en la primera lección.</strong> Después puede seguir a su ritmo, cuando quiera, sin depender de ti.</li>
+    </ol>
+
+    <h2>Lo que va a aprender</h2>
+    <div class="grid-niveles">
+      <div><strong>👆 Primeros toques</strong>Tocar, deslizar, mantener presionado, agrandar la letra, volver atrás.</div>
+      <div><strong>📞 Llamadas</strong>Contestar, marcar un número, guardar contactos.</div>
+      <div><strong>💬 WhatsApp</strong>Escribir, mandar audios, ver fotos.</div>
+      <div><strong>🛡️ Estafas</strong>Reconocer el “cambié de número”, el SMS falso del banco y otras estafas comunes en Chile.</div>
+      <div class="pronto"><strong>📷 Cámara y fotos</strong><span class="etiqueta">Pronto</span></div>
+      <div class="pronto"><strong>🏛️ Trámites y ClaveÚnica</strong><span class="etiqueta">Pronto</span></div>
+    </div>
+
+    <h2>¿Por qué funciona?</h2>
+    <ul class="lista-consejos">
+      <li><strong>Practica en un celular de mentira</strong> dentro de la app: no hay miedo a mandar algo por error ni a “echar a perder” nada.</li>
+      <li><strong>Le habla en voz alta</strong>, con calma, y le muestra con una manito dónde tocar si se queda pegado.</li>
+      <li><strong>Nunca hay “error”</strong>: solo “casi, mire, es aquí”. Y celebra cada logro.</li>
+      <li>Al terminar cada nivel, puede <strong>contarte por WhatsApp</strong> lo que aprendió.</li>
+    </ul>
+
+    <h2>Consejos para acompañar sin frustrarse (ni frustrarle)</h2>
+    <ul class="consejos">
+      <li>🙌 <strong>No le quites el celular de las manos.</strong> Que sea su dedo el que toca, aunque demore.</li>
+      <li>🐢 <strong>Una cosa a la vez.</strong> Hoy contestar llamadas; los audios, otro día.</li>
+      <li>📝 <strong>Escríbele los pasos en un papel</strong>, con sus palabras. Es su “machete”.</li>
+      <li>💛 <strong>Celebra lo que logra</strong>, aunque te parezca muy simple. Para quien parte de cero, es un montón.</li>
+      <li>🔁 <strong>Repetir no es molestar.</strong> Si pregunta lo mismo tres veces, es porque está aprendiendo.</li>
+    </ul>
+
+    <h2 id="pedir">Pídele una lección</h2>
+    <p>¿Quieres que practique algo en particular? Elige la lección y se la mandas por WhatsApp. Al tocar el enlace, la lección se abre directo en su celular.</p>
+    <div class="campo-nombre">
+      <label for="nombre-familiar">Tu nombre (para que sepa quién se la manda)</label>
+      <input id="nombre-familiar" type="text" maxlength="40" placeholder="Ej: Carolina" autocomplete="given-name">
+    </div>
+    <div id="pedidos" class="pedidos"></div>
+
+    <h2>Plan Familia</h2>
+    <div class="plan">
+      <p><strong>Ya disponible y gratis:</strong></p>
+      <ul class="lista-consejos">
+        <li>📊 <strong>Ver su avance.</strong> Desde la app, tu familiar toca “Enviar mi avance” y te llega un enlace por WhatsApp con las lecciones que completó.</li>
+        <li>📚 <strong>Mandarle lecciones</strong> específicas, aquí arriba.</li>
+      </ul>
+      <p><strong>Muy pronto:</strong></p>
+      <ul class="lista-consejos">
+        <li>🔄 Avance actualizado solo, sin que tenga que enviarlo.</li>
+        <li>🚨 Avisos de estafas nuevas que están circulando en Chile.</li>
+        <li>👨‍👩‍👧 Varios familiares acompañando a la misma persona.</li>
+      </ul>
+      <p style="margin-bottom:0">Tu avance no se guarda en ningún servidor: viaja solo dentro del enlace que te mandan. Y la app para quien aprende seguirá siendo <strong>siempre gratis y sin publicidad</strong>.</p>
+    </div>
+
+    <h2>¿Municipio, Caja de Compensación o empresa?</h2>
+    <p>Paso a Paso puede apoyar talleres de alfabetización digital para personas mayores, con lecciones adaptadas a tus servicios y con tu marca como patrocinador.</p>
+
+    <p class="pie">Paso a Paso · Hecho en Chile con paciencia 💛</p>
+  </main>
+  <script src="js/core.js"></script>
+  <script src="js/lecciones/nivel1-toques.js"></script>
+  <script src="js/lecciones/nivel2-llamadas.js"></script>
+  <script src="js/lecciones/nivel3-whatsapp.js"></script>
+  <script src="js/lecciones/nivel4-estafas.js"></script>
+  <script src="js/lecciones/proximamente.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      const { h } = PP;
+      const wsp = PP.enlaceWhatsApp;
+      const niveles = PP.niveles.filter((n) => !n.pronto);
+
+      // Compartir la app
+      const textoApp = '¡Hola! 😊 Te mando una aplicación para aprender a usar el celular con calma y a tu ritmo. Te habla, te muestra dónde tocar y no se puede romper nada. Ábrela aquí: ';
+      document.getElementById('compartir').href = wsp(textoApp + PP.base() + 'index.html');
+
+      // Nombre de quien manda las lecciones (se recuerda en este teléfono)
+      const campoNombre = document.getElementById('nombre-familiar');
+      try { campoNombre.value = localStorage.getItem('pasoapaso.familiar') || ''; } catch (e) {}
+      const nombre = () => campoNombre.value.trim();
+
+      function enlacePedir(l) {
+        return wsp('¡Hola! 😊 Te mandé una lección para practicar en Paso a Paso: “' + l.titulo + '”. Toca aquí para empezar: ' + PP.enlacePedido(l.id, nombre()));
+      }
+      function botonPedir(l, texto) {
+        const a = h('a', { class: 'btn-pedir', target: '_blank', rel: 'noopener', href: enlacePedir(l) }, texto);
+        a.dataset.leccion = l.id;
+        return a;
+      }
+      // Los enlaces llevan el nombre: se actualizan cuando cambia
+      campoNombre.addEventListener('input', () => {
+        try { localStorage.setItem('pasoapaso.familiar', nombre()); } catch (e) {}
+        document.querySelectorAll('[data-leccion]').forEach((a) => { a.href = enlacePedir(PP.buscarLeccion(a.dataset.leccion).leccion); });
+      });
+
+      // Lista de lecciones para pedir
+      document.getElementById('pedidos').append(...niveles.map((nv) =>
+        h('div', { class: 'grupo' },
+          h('strong', {}, nv.icono + ' ' + nv.titulo),
+          nv.lecciones.map((l) => botonPedir(l, [l.icono + ' ' + l.titulo, h('span', { 'aria-hidden': 'true' }, '💬')])))));
+
+      // Panel de avance (cuando se abre desde el enlace que manda el familiar)
+      const avance = PP.leerAvance(location.hash);
+      if (avance) {
+        const total = niveles.reduce((s, nv) => s + nv.lecciones.length, 0);
+        const hechas = niveles.reduce((s, nv) => s + nv.lecciones.filter((l) => avance.hechas[l.id]).length, 0);
+        const fecha = avance.fecha.toLocaleDateString('es-CL', { day: 'numeric', month: 'long', timeZone: 'UTC' });
+        const panel = document.getElementById('avance');
+        panel.append(
+          h('h1', {}, hechas ? '📊 El avance de tu familiar' : '📊 Tu familiar está empezando'),
+          h('p', { class: 'avance-resumen' }, h('strong', {}, hechas + ' de ' + total), ' lecciones completadas'),
+          h('p', { class: 'avance-fecha' }, 'Enviado el ' + fecha),
+          ...niveles.map((nv) => {
+            const n = nv.lecciones.filter((l) => avance.hechas[l.id]).length;
+            return h('div', { class: 'avance-nivel' },
+              h('div', { class: 'avance-nivel-cabeza' }, h('span', {}, nv.icono + ' ' + nv.titulo), h('span', {}, n === nv.lecciones.length ? '✅' : n + '/' + nv.lecciones.length)),
+              h('span', { class: 'barra' }, h('span', { style: { width: (100 * n) / nv.lecciones.length + '%' } })),
+              h('ul', { class: 'avance-lista' }, nv.lecciones.map((l) => avance.hechas[l.id]
+                ? h('li', {}, h('span', {}, '✅ ' + l.titulo))
+                : h('li', { class: 'pendiente' }, h('span', {}, '○ ' + l.titulo), botonPedir(l, 'Pídele esta 💬')))));
+          }),
+          h('p', { class: 'avance-animo' }, '💛 Escríbele para felicitarle. A quien está aprendiendo, eso le motiva más que nada.'));
+        panel.hidden = false;
+      }
+    })();
+  </script>
+</body>
+</html>
